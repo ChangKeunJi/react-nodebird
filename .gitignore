@@ -1,0 +1,6 @@
+react-nodebird.pem
+node_modules
+back/node_modules
+front/node_modules
+back/.env
+front/.next
