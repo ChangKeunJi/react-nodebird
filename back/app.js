@@ -42,7 +42,7 @@ app.use(
   cors({
     // origin:'https://nodebird.com'
     // origin: "http://localhost:3000",
-    origin: ["http://localhost:3000", "nodebird.com"],
+    origin: [true, "nodebird.com"],
     credentials: true, // 쿠키를 전달해준다.
   })
 );
@@ -78,7 +78,8 @@ app.use("/hashtag", hashtagRouter);
 // 에러처리 미들웨어(특별히 에러처리를 커스텀하고 싶을 때 사용)
 // app.use((err, req, res, next) => {});
 
-app.listen(3065, () => {
+// 80 은 http 포트
+app.listen(80, () => {
   console.log("실행 중!!");
 });
 
