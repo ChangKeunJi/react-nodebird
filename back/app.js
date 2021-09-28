@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const hpp = require("hpp");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -26,23 +28,21 @@ db.sequelize
 
 passportConfig();
 
-// url과 메서드를 조건문 없이 한 번에 작성한다.
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
-
-app.get("/api", (req, res) => {
-  res.send("Hello api");
-});
-
-app.use(morgan("dev"));
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+  // 보안을 위해서
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan("dev"));
+}
 
 // 모든 요청에 대해 cors 요청 설정
 app.use(
   cors({
     // origin:'https://nodebird.com'
     // origin: "http://localhost:3000",
-    origin: true,
+    origin: ["http://localhost:3000", "nodebird.com"],
     credentials: true, // 쿠키를 전달해준다.
   })
 );
@@ -67,6 +67,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/", (req, res) => {
+  res.send("Hello");
+});
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 app.use("/user", userRouter);
