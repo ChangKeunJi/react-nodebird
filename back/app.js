@@ -42,7 +42,7 @@ app.use(
   cors({
     // origin:'https://nodebird.com'
     // origin: "http://localhost:3000",
-    origin: [true, "nodebird.com"],
+    origin: [true, "nodebird.com", "http://13.124.164.104"],
     credentials: true, // 쿠키를 전달해준다.
   })
 );
