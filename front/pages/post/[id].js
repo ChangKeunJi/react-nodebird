@@ -15,10 +15,10 @@ const Post = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { id } = router.query;
 
-  // fallback 이 true 이고, path 존재하지 않을 때 CSR 하도록 기다려준다
-  if (router.isFallback) {
-    return <div>로딩 중...</div>;
-  }
+  // // fallback 이 true 이고, path 존재하지 않을 때 CSR 하도록 기다려준다
+  // if (router.isFallback) {
+  //   return <div>로딩 중...</div>;
+  // }
 
   return (
     <AppLayout>
@@ -49,22 +49,22 @@ const Post = () => {
   );
 };
 
-// 다이나믹 라우팅으로 정적 사이트를 불러오고 싶을 때는 미리 path 를 세팅해놔야 한다
-export async function getStaticPaths() {
-  return {
-    paths: [
-      { params: { id: "8" } },
-      { params: { id: "10" } },
-      { params: { id: "37" } },
-      // { params: { id: "38" } },
-    ],
-    fallback: true,
-    // true 로 하면 존재하지 않는 path 도 error 나지 않는다 대신 SSR 이 안된다
-  };
-}
+// // 다이나믹 라우팅으로 정적 사이트를 불러오고 싶을 때는 미리 path 를 세팅해놔야 한다
+// export async function getStaticPaths() {
+//   return {
+//     paths: [
+//       { params: { id: "8" } },
+//       { params: { id: "10" } },
+//       { params: { id: "37" } },
+//       // { params: { id: "38" } },
+//     ],
+//     fallback: true,
+//     // true 로 하면 존재하지 않는 path 도 error 나지 않는다 대신 SSR 이 안된다
+//   };
+// }
 
 // getServersideProps 대신 사용해봄
-export const getStaticProps = wrapper.getStaticProps(
+export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (req, res) => {
     const cookie = req.req ? req.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
